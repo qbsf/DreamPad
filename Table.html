@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        img {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        body {
+          background-image: url('/GifFiles/Background.png');
+          background-repeat: no-repeat;
+          background-size: 100% 150%;
+          background-attachment: fixed;
+        }
+    </style>
+    <script>
+        var lastKickIndex = 1;
+        var lastClapIndex = 3;
+        var lastHatIndex = 1;
+        var lastPercIndex = 1;
+        // Preload audio files
+        var kickAudio = new Audio("/SoundFiles/kick1.mp3");
+        var clapAudio = new Audio("/SoundFiles/clap3.mp3");
+        var hatAudio = new Audio("/SoundFiles/hat1.mp3");
+        var percAudio = new Audio("/SoundFiles/perc1.mp3");
+        // Set loop property for audio files
+        kickAudio.loop = true;
+        clapAudio.loop = true;
+        hatAudio.loop = true;
+        percAudio.loop = true;
+        // Variable to track if sound is muted
+        var isMuted = false;
+        // Function to toggle mute 
+        function toggleMute() {
+            isMuted = !isMuted;
+            if (isMuted) {
+                kickAudio.pause();
+                clapAudio.pause();
+                hatAudio.pause();
+                percAudio.pause();
+            } else {
+                if (lastKickIndex !== null) kickAudio.play();
+                if (lastClapIndex !== null) clapAudio.play();
+                if (lastHatIndex !== null) hatAudio.play();
+                if (lastPercIndex !== null) percAudio.play();
+            }
+        }
+        function randomizeKickGif() {
+            var randomIndex = generateRandomIndex(lastKickIndex);           //chooses a random number from 1-5 to select a new gif and sound file
+            lastKickIndex = randomIndex;
+            var img = document.getElementById('kickGif');
+            img.src = "/GifFiles/kick" + randomIndex + ".gif";
+            kickAudio.src = "/SoundFiles/kick" + randomIndex + ".mp3";
+            kickAudio.currentTime = 0;                                     // Reset audio to the beginning
+            if (!isMuted) kickAudio.play();
+        }
+        function randomizeClapGif() {
+            var randomIndex = generateRandomIndex(lastClapIndex);
+            lastClapIndex = randomIndex;
+            var img1 = document.getElementById('clapGif1');
+            var img2 = document.getElementById('clapGif2');
+            img1.src = "/GifFiles/clap" + randomIndex + ".gif";
+            img2.src = "/GifFiles/clap" + randomIndex + ".gif";
+            clapAudio.src = "/SoundFiles/clap" + randomIndex + ".mp3";
+            clapAudio.currentTime = 0; 
+            if (!isMuted) clapAudio.play();
+        }
+        function randomizeHatGif() {
+            var randomIndex = generateRandomIndex(lastHatIndex);
+            lastHatIndex = randomIndex;
+            var img = document.getElementById('hatGif');
+            img.src = "/GifFiles/hat" + randomIndex + ".gif";
+            hatAudio.src = "/SoundFiles/hat" + randomIndex + ".mp3";
+            hatAudio.currentTime = 0; 
+            if (!isMuted) hatAudio.play();
+        }
+        function randomizePercGif() {
+            var randomIndex = generateRandomIndex(lastPercIndex);
+            lastPercIndex = randomIndex;
+            var img1 = document.getElementById('percGif1');
+            var img2 = document.getElementById('percGif2');
+            img1.src = "/GifFiles/perc" + randomIndex + ".gif";
+            img2.src = "/GifFiles/perc" + randomIndex + ".gif";
+            percAudio.src = "/SoundFiles/perc" + randomIndex + ".mp3";
+            percAudio.currentTime = 0; 
+            if (!isMuted) percAudio.play();
+        }
+        function generateRandomIndex(lastIndex) {
+            var randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * 5) + 1;
+            } while (randomIndex === lastIndex); //Prevents the index from randomising to the same number twice
+            return randomIndex;
+        }
+    </script>
+</head>
+<body>
+<img id="kickGif" src="/GifFiles/kick1.gif" alt="Gif1" width="700" height="700"  style="position: absolute; top:30px; left:610px;">
+<p>
+    <img id="hatGif" src="/GifFiles/hat1.gif" alt="Gif1" width="150" height="150" style="position: absolute; top:300px; left:885px;">
+    <img id="clapGif1" src="/GifFiles/clap3.gif" alt="Gif1" width="150" height="150" style="position: absolute; top:150px; left:885px;">
+    <img id="clapGif2" src="/GifFiles/clap3.gif" alt="Gif1" width="150" height="150" style="position: absolute; top:450px; left:885px; transform: scaleY(-1);">
+    <img id="percGif1" src="/GifFiles/perc1.gif" alt="Gif1" width="300" height="300" style="position: absolute; top:250px; left: 1000px;">
+    <img id="percGif2" src="/GifFiles/perc1.gif" alt="Gif1" width="300" height="300" style="position: absolute; top:250px; left: 615px; transform: scaleX(-1);">
+</p>
+<img src="/ButtonFiles/kickbutton.png" alt="Kick Button" onclick="randomizeKickGif()" width="100" height="100" style="position: absolute; top:100px; left:490px;">
+<img src="/ButtonFiles/clapbutton.png" alt="Clap Button" onclick="randomizeClapGif()" width="100" height="100" style="position: absolute; top:200px; left:490px;">
+<img src="/ButtonFiles/hatbutton.png" alt="Hat Button" onclick="randomizeHatGif()" width="100" height="100" style="position: absolute; top:300px; left:490px;">
+<img src="/ButtonFiles/percbutton.png" alt="Perc Button" onclick="randomizePercGif()" width="100" height="100" style="position: absolute; top:400px; left:490px;">
+<img src="/ButtonFiles/mutebutton.png" alt="Mute Button" onclick="toggleMute()" width="100" height="100" style="position: absolute; top:500px; left:490px;">
+
+<img src="/ButtonFiles/Title.png" alt="Title" width="400" height="400" style="position: absolute; top:660px; left:740px;">
+<img src="/ButtonFiles/textbox.png" alt="Description" width="400" height="400" style="position: absolute; top:150px; left:1210px;">
+
+
+<p></p>
+</body>
+</html>
